@@ -1,4 +1,4 @@
-import {useState, Fragment, memo, useEffect} from "react";
+import { useState, Fragment, memo, useEffect } from "react";
 
 //components
 import SectionSlider from "../slider/SectionSlider";
@@ -9,24 +9,24 @@ import { latestMovie } from "../../StaticData/data";
 
 // the hook
 import { useTranslation } from "react-i18next";
-import {executeGetLatestContent, executeGetLatestTVSeries} from "../../api/endPoints.jsx";
+import { executeGetLatestContent, executeGetLatestTVSeries } from "../../api/endPoints.jsx";
 import CardStyleForSeries from "../cards/CardStyleForSeries.jsx";
 
 const LatestTvShows = memo((props) => {
   const { t } = useTranslation();
-    const [latestContentData,setLatestContentData]= useState([]);
+  const [latestContentData, setLatestContentData] = useState([]);
 
-    const getLatestContents = async () => {
-        try {
-            const response = await executeGetLatestTVSeries();
-            setLatestContentData(response.data['data']);
-        } catch (error) {
-            console.error('Error:', error);
-        }
+  const getLatestContents = async () => {
+    try {
+      const response = await executeGetLatestTVSeries();
+      setLatestContentData(response.data['data']);
+    } catch (error) {
+      console.error('Error:', error);
     }
-    useEffect(() => {
-        getLatestContents()
-    }, []);
+  }
+  useEffect(() => {
+    getLatestContents()
+  }, []);
 
   return (
     <Fragment>
@@ -38,6 +38,7 @@ const LatestTvShows = memo((props) => {
         paddingY={props.paddingY}
       // loop={true}
       >
+
         {(data) => (
           <CardStyleForSeries
             image={data.thumbnail_url}
@@ -47,7 +48,7 @@ const LatestTvShows = memo((props) => {
             selectedVideo_Data={data}
             selectedVideo_Array={latestContentData}
             watchlistLink="/playlist"
-            // link="/episodes"
+          // link="/episodes"
           />
         )}
       </SectionSlider>

@@ -5,13 +5,13 @@ import BlankLayout from "../layouts/BlankLayout";
 import PrivateRoute from "./PrivateRoute"; // Import PrivateRoute
 
 
-
 // Main Pages
 const HomePage = lazy(() => import("../views/MainPages/HomePage"));
 const ExplorePage = lazy(() => import("../views/MainPages/ExplorePage"));
 const MoviePage = lazy(() => import("../views/MainPages/MoviesPage"));
 const TvShowsList = lazy(() => import("../views/MainPages/TvShowsPage"));
 const MiscellaneousPage = lazy(() => import("../views/MainPages/MiscellaneousPage"));
+const LiveEventsPage = lazy(() => import("../views/MainPages/LiveEventsPage"));
 
 // Detail Pages
 const MovieDetail = lazy(() => import("../views/Movies/DetailPage"));
@@ -48,12 +48,17 @@ const RestrictedPage = lazy(() => import("../views/Movies/RestictedPage"));
 const LoginPage = lazy(() => import("../views/AuthPages/LoginPage"));
 const SignUpPage = lazy(() => import("../views/AuthPages/SignUpPage"));
 const LostPassword = lazy(() => import("../views/AuthPages/LostPassword"));
+const UpdateUser = lazy(() => import("../views/AuthPages/UserProfilePage"));
 
 
 //subscription
 const PricingPage = lazy(() => import("../views/SubscriptionPage/PricingPage"));
 const SuccessPage = lazy(() => import("../views/SubscriptionPage/Success"));
 const CancelPage = lazy(() => import("../views/SubscriptionPage/Cancel"));
+
+// live stream
+const LiveStreamPage = lazy(() => import("../views/LiveEvents/LiveStreamPage"));
+
 
 export const LandingpageRouter = [
   {
@@ -69,7 +74,9 @@ export const LandingpageRouter = [
       { path: "/explore", element: <ExplorePage /> },
       { path: "/movies", element: <MoviePage /> },
       { path: "/tv-shows", element: <TvShowsList /> },
+      { path: "/live", element: <LiveEventsPage /> },
       { path: "/miscellaneous", element: <MiscellaneousPage /> },
+
       // Detail Pages
       { path: "/movies-detail", element: <MovieDetail /> },
       { path: "/shows-details", element: <TvShowsDetail /> },
@@ -77,6 +84,8 @@ export const LandingpageRouter = [
       { path: "/videos-detail", element: <VideoDetail /> },
       { path: "/watchlist-detail", element: <WatchlistDetail /> },
       { path: "/related-merchandise", element: <RelatedMerchandisePage /> },
+      { path: "/update-user", element: <UpdateUser /> },
+
 
       // Merchandise Pages
       { path: "/all-products", element: <AllProduct /> },
@@ -87,6 +96,7 @@ export const LandingpageRouter = [
       { path: "/cart", element: <CartPage /> },
       { path: "/track-order", element: <TrackOrder /> },
 
+
       // Extra Pages
       { path: "/about-us", element: <AboutPage /> },
       { path: "/contact-us", element: <ContactPage /> },
@@ -95,6 +105,9 @@ export const LandingpageRouter = [
       { path: "/faq", element: <FAQPage /> },
       { path: "/view-all", element: <ViewAll /> },
 
+
+      // live stream
+      { path: "/live-stream/:eventId", element: <LiveStreamPage /> },
 
     ],
   },

@@ -7,6 +7,8 @@ import {
     GET_CONTENT_BY_ID,
     GET_LATEST_CONTENT,
     GET_MOVIES,
+    GET_RANDOM_MOVIES,
+    GET_LATEST_MOVIES,
     GET_WEB_SERIES,
     GET_POPULAR_CONTENT,
     GET_SUSILA_ORIGINALS,
@@ -151,14 +153,7 @@ export const executeGetRandomTVSeries = () => {
     });
 };
 
-// export const executeGetMovies = () => {
-//     return API_ENDPOINT.get(GET_MOVIES,{
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': 'D4s%I6jN!W3v#E9xS1C5b@N2mH',
-//         },
-//     });
-// };
+
 
 export const executeGetContentByContentId = (contentId) => {
     return API_ENDPOINT.get(GET_CONTENT_BY_CONTENT_ID, contentId, {
@@ -178,6 +173,7 @@ export const executeGetContentByCategoryId = (categoryID) => {
     });
 };
 
+
 export const executeGetContent = () => {
     return API_ENDPOINT.get(GET_CONTENT, {
         headers: headers,
@@ -196,11 +192,7 @@ export const executeGetWebSeries = (webBody) => {
         params: webBody
     });
 };
-export const executeGetMovies = () => {
-    return API_ENDPOINT.get(GET_MOVIES, {
-        headers: headers,
-    });
-};
+
 
 // export const executeGetContentBySeries = (category,title) => {
 //     return API_ENDPOINT.get(GET_CONTENT_BY_SERIES,category,title, {
@@ -222,3 +214,31 @@ export const executeGetContentBySeries = (category, title) => {
         },
     });
 };
+
+export const executeGetMovies = () => {
+    return API_ENDPOINT.get(GET_MOVIES, {
+        headers: headers,
+    });
+};
+
+export const excecuteGetRandomMovies = () => {
+    return API_ENDPOINT.get(GET_RANDOM_MOVIES, {
+        headers: headers,
+    });
+};
+
+export const excecuteGetLatesMovies = () => {
+    return API_ENDPOINT.get(GET_LATEST_MOVIES, {
+        headers: headers,
+    });
+};
+
+
+// export const executeGetMovies = () => {
+//     return API_ENDPOINT.get(GET_MOVIES,{
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': 'D4s%I6jN!W3v#E9xS1C5b@N2mH',
+//         },
+//     });
+// };

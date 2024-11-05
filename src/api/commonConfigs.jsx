@@ -5,6 +5,9 @@ export const GET_SUSILA_ORIGINALS = `${baseUrl}/content/getSusilaOriginals`;
 export const GET_TELEDRAMA_SERIES = `${baseUrl}/content/getSeries`;
 export const GET_WEB_SERIES = `${baseUrl}/content/getSeriesCommon`;
 export const GET_MOVIES = `${baseUrl}/content/getMovies`;
+export const GET_RANDOM_MOVIES = `${baseUrl}/content/getRandomMovies`;
+export const GET_LATEST_MOVIES = `${baseUrl}/content/getLatestMovies`;
+
 export const GET_LATEST_CONTENT = `${baseUrl}/content/getLatestContent`;
 export const GET_POPULAR_CONTENT = `${baseUrl}/content/getPopularContent`;
 export const GET_BANNERS = `${baseUrl}/content/getBanners`;

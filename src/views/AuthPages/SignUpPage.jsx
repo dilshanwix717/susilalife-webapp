@@ -1,10 +1,11 @@
 import React, { Fragment, memo, useState } from "react";
-import { Col, Container, Form, Row, Alert } from "react-bootstrap";
+import { Col, Container, Form, Row, Alert, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { auth, db } from "../../firebase"; // Assuming firebase is in src/firebase.js
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore"; // Firestore functions
+import { auth, db } from "../../firebase";
+import { createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import googleLogo from "/assets/images/google.png";
 
 const SignUpPage = memo(() => {
   const { t } = useTranslation();
@@ -16,6 +17,7 @@ const SignUpPage = memo(() => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const googleProvider = new GoogleAuthProvider();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -24,28 +26,16 @@ const SignUpPage = memo(() => {
       return;
     }
     try {
-      // Assign the response from the createUserWithEmailAndPassword call
       const response = await createUserWithEmailAndPassword(auth, email, password);
-
       if (response.user) {
-        // Use updateProfile function and pass the user object as the first argument
-        await updateProfile(response.user, {
-          displayName: firstName,
-        });
-
-
+        await updateProfile(response.user, { displayName: firstName });
         const uid = response.user.uid;
-
-        // Write to Firestore database
-        const userDocRef = doc(db, "webAppUsers", uid);  // Create reference to Firestore document
-        await setDoc(userDocRef, {
-          uid: uid,
-          email: email,
-          lastName: lastName,
-          firstName: firstName,
+        await setDoc(doc(db, "webAppUsers", uid), {
+          uid,
+          email,
+          firstName,
+          lastName,
         });
-
-        // Reset form inputs
         setFirstName("");
         setLastName("");
         setEmail("");
@@ -53,23 +43,41 @@ const SignUpPage = memo(() => {
         navigate("/login");
       }
     } catch (error) {
-      // Log the error to help debug
-      console.error("Error during sign up: ", error.message);
-
-      // Set error message for user feedback
-      // Set error message for user feedback
-      if (error.message === "Firebase: Error (auth/email-already-in-use).") {
+      if (error.message.includes("auth/email-already-in-use")) {
         setError("Email already exists. Please use a new email.");
       } else {
-        setError("Error during sign up: " + error.message);
+        setError("Error during sign-up: " + error.message);
       }
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    try {
+      const response = await signInWithPopup(auth, googleProvider);
+      const user = response.user;
+
+      const userDocRef = doc(db, "webAppUsers", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (!userDoc.exists()) {
+        await setDoc(userDocRef, {
+          uid: user.uid,
+          email: user.email,
+          firstName: user.displayName?.split(" ")[0] || "",
+          lastName: user.displayName?.split(" ").slice(1).join(" ") || "",
+        });
+      }
+
+      navigate("/");
+    } catch (error) {
+      setError("Failed to sign up with Google.");
     }
   };
 
   return (
     <Fragment>
       <main className="main-content">
-        <div className="vh-100" style={{ backgroundImage: "url(assets/images/pages/01.webp)", backgroundSize: "cover", backgroundRepeat: "no-repeat", position: "relative", minHeight: "500px", }} >
+        <div className="vh-100" style={{ backgroundImage: "url(assets/images/pages/01.webp)", backgroundSize: "cover", backgroundRepeat: "no-repeat", position: "relative", minHeight: "500px" }}>
           <Container>
             <Row className="justify-content-center align-items-center height-self-center vh-100">
               <Col lg="8" md="12" className="align-self-center">
@@ -113,9 +121,25 @@ const SignUpPage = memo(() => {
                       </div>
                     </div>
                   </Form>
+
+                  {/* <div className="text-center my-2 d-flex align-items-center">
+                    <hr className="flex-grow-1" style={{ borderColor: "gray" }} />
+                    <span className="text-white fw-500 mx-2">{t("or")}</span>
+                    <hr className="flex-grow-1" style={{ borderColor: "gray" }} />
+                  </div>
+
+                  <div className="text-center my-3">
+                    <Button variant="outline-secondary" onClick={handleGoogleSignUp}>
+                      <img src={googleLogo} alt="Google Logo" style={{ width: "40px", marginRight: "10px" }} />
+                      {t("Sign up with Google")}
+                    </Button>
+                  </div> */}
+
                   <p className="my-4 text-center fw-500 text-white">
-                    Already have an account?
-                    <Link to="/login" className="text-primary ms-1">Sign in</Link>
+                    <Link to="/login" className="text-white ms-1">
+                      Already have an account? Please
+                      <span className="text-primary"> {t(" Log in")}</span>
+                    </Link>
                   </p>
                 </div>
               </Col>
@@ -129,3 +153,5 @@ const SignUpPage = memo(() => {
 
 SignUpPage.displayName = "SignUpPage";
 export default SignUpPage;
+
+
