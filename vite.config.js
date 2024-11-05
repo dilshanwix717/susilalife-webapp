@@ -13,5 +13,6 @@ export default defineConfig(({ mode }) => {
       outDir: "build",
       minify: true,
     },
+
   };
 });

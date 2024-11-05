@@ -145,6 +145,9 @@ const HeaderDefault = memo(() => {
                     <Nav.Item as="li">{/* TV Show Menu */}
                       <Nav.Link aria-expanded={open1} href="/tv-shows"><span className="item-name">{t("header.tv_show")}</span></Nav.Link>
                     </Nav.Item>
+                    <Nav.Item as="li">{/* Live events Menu */}
+                      <Nav.Link aria-expanded={open1} href="/live"><span className="item-name">{t("Live")}</span></Nav.Link>
+                    </Nav.Item>
                     <Nav.Item as="li">      {/* Pages Menu */}
                       <Nav.Link aria-expanded={open2} href="#homePages" onClick={() => setOpen2(!open2)} className={location.pathname === "/about-us" || location.pathname === "/contact-us" || location.pathname === "/faq" || location.pathname === "/PrivacyPolicy" || location.pathname === "/pricing" ? "active" : ""} >
                         <span className="item-name">{t("header.pages")}</span>
@@ -221,12 +224,13 @@ const HeaderDefault = memo(() => {
                         </div>
                       </Dropdown.Toggle>
                       <Dropdown.Menu as="ul" className="dropdown-menu-end dropdown-user border-0 p-0 m-0">
-                        <li className="user-info d-flex align-items-center gap-3 mb-3">
-                          <img src={user} className="img-fluid" alt="" loading="lazy" />
-                          <span className="font-size-14 fw-500 text-capitalize text-white">{t("header.jenny")}</span>
-                        </li>
+                        {/* <li className="user-info d-flex align-items-center gap-3 mb-3"> */}
+                        {/* <img src={user} className="img-fluid" alt="" loading="lazy" /> */}
+                        {/* <span className="font-size-14 fw-500 text-capitalize text-white">{t("header.jenny")}</span> */}
+                        {/* </li> */}
+
                         {[
-                          { to: "/playlist", icon: "M7.845 20.662C4.153 20.662 1 20.088 1 17.787c0-2.301 3.133-4.425 6.845-4.425 3.692 0 6.845 2.103 6.845 4.403 0 2.301-3.133 4.425-6.845 4.425Z M7.837 10.174c2.423 0 4.387-1.964 4.387-4.387S10.26 1.4 7.837 1.4c-2.423 0-4.387 1.964-4.387 4.387-.008 2.414 1.942 4.378 4.357 4.386h.033Z", label: "my_account" },
+                          { to: "/account", icon: "M7.845 20.662C4.153 20.662 1 20.088 1 17.787c0-2.301 3.133-4.425 6.845-4.425 3.692 0 6.845 2.103 6.845 4.403 0 2.301-3.133 4.425-6.845 4.425Z M7.837 10.174c2.423 0 4.387-1.964 4.387-4.387S10.26 1.4 7.837 1.4c-2.423 0-4.387 1.964-4.387 4.387-.008 2.414 1.942 4.378 4.357 4.386h.033Z", label: "my_account" },
                           { to: "/playlist", icon: "M19 11h-6V5a1 1 0 1 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 1 0 2 0v-6h6a1 1 0 1 0 0-2Z", label: "watchlist" },
                           { to: "/pricing", icon: "M8.587 8.236l2.598-5.232a1 1 0 0 1 1.63 0l2.598 5.232 5.809.844c.745.108 1.042 1.019.502 1.541L17.522 14.692l.992 5.749c.128.738-.652 1.301-1.319.953L12 18.678l-5.194 2.716c-.667.349-1.446-.214-1.319-.953l.992-5.749L2.276 10.622c-.54-.522-.243-1.433.502-1.541l5.809-.845Z", label: "subscription" },
                         ].map(({ to, icon, label }, idx) => (

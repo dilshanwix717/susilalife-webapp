@@ -1,34 +1,49 @@
-import { useState, Fragment, memo } from "react";
+import { useState, Fragment, memo, useEffect } from "react";
 
-//components
+//componets
 import SectionSlider from "../slider/SectionSlider";
 import CardStyle from "../cards/CardStyle";
 
-//static data
-import { spacialLatestMovie } from "../../StaticData/data";
 // the hook
 import { useTranslation } from "react-i18next";
+import { executeGetMovies, executeGetSusilaOriginals } from "../../api/endPoints.jsx";
 
 const SpecialsLatestMovies = memo((props) => {
   const { t } = useTranslation();
-  const [title] = useState(t("home.specials_latest_movies"));
+  const [latestContentData, setLatestContentData] = useState([]);
+  const [movieData, setMovieData] = useState([]);
+  const getMovies = async () => {
+    console.log('content Data Execute start');
+    try {
+      const response = await executeGetMovies();
+      // console.log('Content Data :==============>>>', response.data['data']);
+      setMovieData(response.data['data']);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+  useEffect(() => {
+    getMovies()
+  }, []);
 
   return (
     <Fragment>
       <SectionSlider
-        title={title}
-        list={spacialLatestMovie}
+        title={'All Movies'}
+        list={movieData}
         className="recommended-block streamit-block"
+        // loop={true}
         paddingY={props.paddingY}
-      // loop={true}
       >
         {(data) => (
           <CardStyle
-            image={data.image}
+            image={data.thumbnail_url}
             title={data.title}
-            movieTime={data.movieTime}
+            // movieTime={data.movieTime}
             watchlistLink="/playlist"
             link="/movies-detail"
+            selectedVideo_Data={data}
+            selectedVideo_Array={movieData}
           />
         )}
       </SectionSlider>
@@ -38,3 +53,4 @@ const SpecialsLatestMovies = memo((props) => {
 
 SpecialsLatestMovies.displayName = "SpecialsLatestMovies";
 export default SpecialsLatestMovies;
+

@@ -1,11 +1,12 @@
 import React, { Fragment, memo, useState } from "react";
-import { Col, Container, Form, Row, Alert } from "react-bootstrap";
+import { Col, Container, Form, Row, Alert, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { auth } from "../../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../firebase";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import Logo from "../../components/logo";
-
+import googleLogo from "/assets/images/google.png";
 
 const LoginPage = memo(() => {
   const { t } = useTranslation();
@@ -14,13 +15,37 @@ const LoginPage = memo(() => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const googleProvider = new GoogleAuthProvider();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/"); // Assuming there's a dashboard route
+      navigate("/");
     } catch (error) {
       setError("Failed to log in. Please check your credentials.");
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const response = await signInWithPopup(auth, googleProvider);
+      const user = response.user;
+      const userDocRef = doc(db, "webAppUsers", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (!userDoc.exists()) {
+        await setDoc(userDocRef, {
+          uid: user.uid,
+          email: user.email,
+          firstName: user.displayName?.split(" ")[0] || "",
+          lastName: user.displayName?.split(" ").slice(1).join(" ") || "",
+        });
+      }
+
+      navigate("/");
+    } catch (error) {
+      setError("Failed to log in with Google.");
     }
   };
 
@@ -41,7 +66,7 @@ const LoginPage = memo(() => {
             <Row className="justify-content-center align-items-center height-self-center vh-100">
               <Col lg="5" md="12" className="align-self-center">
                 <div className="user-login-card bg-body">
-                  <div className="text-center">
+                  <div className="text-center mb-4">
                     <Logo />
                   </div>
                   {error && <Alert variant="danger">{error}</Alert>}
@@ -88,12 +113,31 @@ const LoginPage = memo(() => {
                       </div>
                     </div>
                   </Form>
+                  {/* Divider for Google Login */}
+                  <div className="text-center my-2 d-flex align-items-center">
+                    <hr className="flex-grow-1" style={{ borderColor: "gray" }} />
+                    <span className="text-white fw-500 mx-2">{t("or")}</span>
+                    <hr className="flex-grow-1" style={{ borderColor: "gray" }} />
+                  </div>
+
+                  {/* Google Login Button */}
+                  <div className="text-center my-3">
+                    <Button variant="outline-secondary" onClick={handleGoogleLogin} className="">
+                      <img src={googleLogo} alt="Google Logo" style={{ width: "40px", marginRight: "10px" }} />
+                      {t("Sign in with Google")}
+                    </Button>
+                  </div>
+
+
+                  {/* Register Button Styled as Outline */}
+
                   <p className="my-4 text-center fw-500 text-white">
-                    <Link to="/register" className="text-primary ms-1">
-                      {t("form.register")}
+                    <Link to="/register" className="text-white ms-1">
+                      Don't have an account? please
+                      <span className="text-primary"> {t("form.register")}</span>
                     </Link>
                   </p>
-                  {/* Additional content like social login buttons */}
+
                 </div>
               </Col>
             </Row>

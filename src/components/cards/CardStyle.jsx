@@ -76,41 +76,7 @@ const CardStyle = memo(({ title, movieTime, watchlistLink, link, image,video_url
             </div>
             <div className="block-social-info align-items-center">
               <ul className="p-0 m-0 d-flex gap-2 music-play-lists">
-            {/*    <li className="share position-relative d-flex align-items-center text-center mb-0">*/}
-                {/*<span className="w-100 h-100 d-inline-block bg-transparent">*/}
-                  {/*<i className="fas fa-share-alt"></i>*/}
-                {/*</span>*/}
-                  {/*<div className="share-wrapper">*/}
-                    {/*<div className="share-boxs d-inline-block">*/}
-                    {/*  <svg*/}
-                    {/*      width="15"*/}
-                    {/*      height="40"*/}
-                    {/*      className="share-shape"*/}
-                    {/*      viewBox="0 0 15 40"*/}
-                    {/*      fill="none"*/}
-                    {/*      xmlns="http://www.w3.org/2000/svg"*/}
-                    {/*  >*/}
-                    {/*    <path*/}
-                    {/*        fillRule="evenodd"*/}
-                    {/*        clipRule="evenodd"*/}
-                    {/*        d="M14.8842 40C6.82983 37.2868 1 29.3582 1 20C1 10.6418 6.82983 2.71323 14.8842 0H0V40H14.8842Z"*/}
-                    {/*        fill="#191919"*/}
-                    {/*    ></path>*/}
-                    {/*  </svg>*/}
-                    {/*  <div className="overflow-hidden">*/}
-                    {/*    <Link to="" target="_blank">*/}
-                    {/*      <i className="fab fa-facebook-f"></i>*/}
-                    {/*    </Link>*/}
-                    {/*    <Link to="" target="_blank">*/}
-                    {/*      <i className="fab fa-twitter"></i>*/}
-                    {/*    </Link>*/}
-                    {/*    <Link to="#">*/}
-                    {/*      <i className="fas fa-link"></i>*/}
-                    {/*    </Link>*/}
-                    {/*  </div>*/}
-                    {/*</div>*/}
-                  {/*</div>*/}
-                {/*</li>*/}
+          
                 <li className="share position-relative d-flex align-items-center text-center mb-0">
                 <span className="w-100 h-100 d-inline-block bg-transparent">
                   <i className="fa-regular fa-heart"></i>

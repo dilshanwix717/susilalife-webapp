@@ -13,8 +13,8 @@ const MoviesPage = memo(() => {
     <Fragment>
       <MovieHeroSlider />
       <PopularMovies showViewAllLink={true} paddingY="my-4" />
-      <SpecialsLatestMovies paddingY="my-4" />
       <MoviesRecommendedForYou slides="6" paddingY="my-4" />
+      <SpecialsLatestMovies paddingY="my-4" />
     </Fragment>
   );
 });

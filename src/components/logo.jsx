@@ -4,7 +4,8 @@ import React, { memo, Fragment } from "react";
 import { Link } from "react-router-dom";
 
 // img
-import img1 from "/assets/images/logo.webp";
+import img1 from "/assets/images/SLFLICKS.png";
+
 import hostar from "/assets/images/logo-hotstar.webp";
 import prime from "/assets/images/logo-prime.webp";
 import hulu from "/assets/images/logo-hulu.webp";
