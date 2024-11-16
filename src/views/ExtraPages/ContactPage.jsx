@@ -1,21 +1,10 @@
-import {memo, Fragment, useState} from "react";
-
-// react-bootstrap
+import { memo, Fragment, useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
-
-//react-router-dom
 import { Link } from "react-router-dom";
-
-//function
-import { generateImgPath } from "../../StaticData/data";
-
-//components
 import BreadcrumbWidget from "../../components/BreadcrumbWidget";
-
-// the hook
 import { useTranslation } from "react-i18next";
 import ContactUsMessage from "../../providers/contentProviders.jsx";
-import {executeSendContactUsMessage} from "../../api/endPoints.jsx";
+import { executeSendContactUsMessage } from "../../api/endPoints.jsx";
 
 const ContactPage = memo(() => {
   const { t } = useTranslation();
@@ -41,10 +30,10 @@ const ContactPage = memo(() => {
     setIsLoading(true);
 
     const message = new ContactUsMessage(
-        formData.userId,
-        formData.name,
-        formData.email,
-        formData.message
+      formData.userId,
+      formData.name,
+      formData.email,
+      formData.message
     );
 
     try {
@@ -120,7 +109,7 @@ const ContactPage = memo(() => {
               <div className="border-bottom pb-4 mb-4">
                 <h5>{t("contact_us.come_see_use")}</h5>
                 <h6>Sri Lanka</h6>
-                <span>No.80,Nawala Road,Nawala,Sri Lanka.</span><br/>
+                <span>No.80,Nawala Road,Nawala,Sri Lanka.</span><br />
                 <h6>Dubai</h6>
                 <span>Susila Global Portal Est,PO Box 128688,Al Muteena.</span>
               </div>
@@ -166,10 +155,10 @@ const ContactPage = memo(() => {
       <div className="map">
         <Container fluid className="p-0">
           <iframe
-              loading="lazy"
-              className="w-100"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.0955606943853!2d79.88864997540716!3d6.879154093119687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25b0ea3345d8d%3A0xdfa6f5cfda220057!2sSusila%20Holdings!5e0!3m2!1sen!2slk!4v1718616577019!5m2!1sen!2slk"
-              height="600"
+            loading="lazy"
+            className="w-100"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.0955606943853!2d79.88864997540716!3d6.879154093119687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25b0ea3345d8d%3A0xdfa6f5cfda220057!2sSusila%20Holdings!5e0!3m2!1sen!2slk!4v1718616577019!5m2!1sen!2slk"
+            height="600"
           ></iframe>
         </Container>
       </div>
@@ -268,51 +257,7 @@ const ContactPage = memo(() => {
                 </div>
               </div>
             </Col>
-            {/*<Col lg="4" md="6">*/}
-            {/*  <div className="contact-box d-flex gap-3 rounded">*/}
-            {/*    <img*/}
-            {/*      src={generateImgPath("/assets/images/pages/box-pattern.webp")}*/}
-            {/*      className="img-fluid position-absolute top-0 end-0"*/}
-            {/*      alt="pattern"*/}
-            {/*    />*/}
-            {/*    <div className="icon-wrapper rounded-circle text-white">*/}
-            {/*      <svg*/}
-            {/*        xmlns="http://www.w3.org/2000/svg"*/}
-            {/*        width="18"*/}
-            {/*        height="18"*/}
-            {/*        viewBox="0 0 18 18"*/}
-            {/*        fill="none"*/}
-            {/*      >*/}
-            {/*        <path*/}
-            {/*          d="M16.8416 8.50829L9.48329 1.14996C9.17496 0.841626 8.74996 0.666626 8.30829 0.666626H2.33329C1.41663 0.666626 0.666626 1.41663 0.666626 2.33329V8.30829C0.666626 8.74996 0.841626 9.17496 1.15829 9.48329L8.51663 16.8416C9.16663 17.4916 10.225 17.4916 10.875 16.8416L16.85 10.8666C17.5 10.2166 17.5 9.16663 16.8416 8.50829ZM9.69163 15.6666L2.33329 8.30829V2.33329H8.30829L15.6666 9.69163L9.69163 15.6666Z"*/}
-            {/*          fill="white"*/}
-            {/*        ></path>*/}
-            {/*        <path*/}
-            {/*          d="M4.41663 5.66663C5.10698 5.66663 5.66663 5.10698 5.66663 4.41663C5.66663 3.72627 5.10698 3.16663 4.41663 3.16663C3.72627 3.16663 3.16663 3.72627 3.16663 4.41663C3.16663 5.10698 3.72627 5.66663 4.41663 5.66663Z"*/}
-            {/*          fill="currentColor"*/}
-            {/*        ></path>*/}
-            {/*      </svg>*/}
-            {/*    </div>*/}
-            {/*    /!*<div style={{ zIndex: "1" }}>*!/*/}
-            {/*    /!*  <h6 className="font-size-18 fw-500 mb-4">*!/*/}
-            {/*    /!*    {t("contact_us.sales_support")}*!/*/}
-            {/*    /!*  </h6>*!/*/}
-            {/*    /!*  <p className="mb-1 font-size-14">*!/*/}
-            {/*    /!*    {t("contact_us.call_on")}{" "}*!/*/}
-            {/*    /!*    <span className="text-primary">(144) 1234 1234</span>*!/*/}
-            {/*    /!*  </p>*!/*/}
-            {/*    /!*  <p className="mb-0">*!/*/}
-            {/*    /!*    {t("contact_us.mail")}{" "}*!/*/}
-            {/*    /!*    <Link*!/*/}
-            {/*    /!*      to="mailto:info@medyapim.com"*!/*/}
-            {/*    /!*      className="text-white fw-500"*!/*/}
-            {/*    /!*    >*!/*/}
-            {/*    /!*      user@enquiries.com*!/*/}
-            {/*    /!*    </Link>*!/*/}
-            {/*    /!*  </p>*!/*/}
-            {/*    /!*</div>*!/*/}
-            {/*  </div>*/}
-            {/*</Col>*/}
+
           </Row>
         </Container>
       </div>

@@ -1,26 +1,12 @@
 import { Fragment, memo, useState } from "react";
-
-//react-router-dom
 import { Link } from "react-router-dom";
-
-//swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-
-//react fs-lightbox
 import FsLightbox from "fslightbox-react";
-
-// Redux Selector / {t("home.action")}
 import { useSelector } from "react-redux";
 import { theme_scheme_direction } from "../../store/setting/selectors";
-
-//function
 import { generateImgPath } from "../../StaticData/data";
-
-// the hook
 import { useTranslation } from "react-i18next";
-
-//utilites
 import { useEnterExit } from "../../utilities/usePage";
 
 const HomeHeroSlider = memo(() => {

@@ -1,5 +1,5 @@
 import React, { Fragment, memo, useState } from "react";
-import { Col, Container, Form, Row, Alert, Button } from "react-bootstrap";
+import { Col, Container, Form, Row, Alert, Button, InputGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { auth, db } from "../../firebase";
@@ -12,6 +12,7 @@ const LoginPage = memo(() => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // New state for password visibility
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -54,13 +55,7 @@ const LoginPage = memo(() => {
       <main className="main-content">
         <div
           className="vh-100"
-          style={{
-            backgroundImage: "url(assets/images/pages/01.webp)",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            position: "relative",
-            minHeight: "500px",
-          }}
+
         >
           <Container>
             <Row className="justify-content-center align-items-center height-self-center vh-100">
@@ -87,13 +82,22 @@ const LoginPage = memo(() => {
                       <Form.Label className="text-white fw-500 mb-2">
                         {t("form.password")}
                       </Form.Label>
-                      <Form.Control
-                        type="password"
-                        className="rounded-0"
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
+                      <InputGroup>
+                        <Form.Control
+                          type={showPassword ? "text" : "password"} // Toggle type based on showPassword state
+                          className="rounded-0"
+                          required
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <Button
+                          variant="outline-primary "
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="eye-icon-button"
+                        >
+                          <i className={`fa ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
+                        </Button>
+                      </InputGroup>
                     </Form.Group>
                     <Form.Group className="text-end mb-3">
                       <Link to="/lost-password" className="text-primary fw-semibold fst-italic">
@@ -113,23 +117,18 @@ const LoginPage = memo(() => {
                       </div>
                     </div>
                   </Form>
-                  {/* Divider for Google Login */}
                   <div className="text-center my-2 d-flex align-items-center">
                     <hr className="flex-grow-1" style={{ borderColor: "gray" }} />
                     <span className="text-white fw-500 mx-2">{t("or")}</span>
                     <hr className="flex-grow-1" style={{ borderColor: "gray" }} />
                   </div>
 
-                  {/* Google Login Button */}
                   <div className="text-center my-3">
-                    <Button variant="outline-secondary" onClick={handleGoogleLogin} className="">
+                    <Button variant="outline-primary" onClick={handleGoogleLogin}>
                       <img src={googleLogo} alt="Google Logo" style={{ width: "40px", marginRight: "10px" }} />
                       {t("Sign in with Google")}
                     </Button>
                   </div>
-
-
-                  {/* Register Button Styled as Outline */}
 
                   <p className="my-4 text-center fw-500 text-white">
                     <Link to="/register" className="text-white ms-1">

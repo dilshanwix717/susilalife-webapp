@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { auth, db } from "../../firebase"; // Import Firebase auth and Firestore
+import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { executePaymentSuccess } from "../../api/endPoints";
-import { FaCheckCircle } from "react-icons/fa"; // For success icon
+import { FaCheckCircle } from "react-icons/fa";
+import { Spinner } from "react-bootstrap";
 
 const Success = () => {
     const navigate = useNavigate();
     const [userId, setUserId] = useState("");
     const [sessionId, setSessionId] = useState("");
+    const [loading, setLoading] = useState(false); // Loading state for the button
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -32,9 +34,8 @@ const Success = () => {
         return () => unsubscribe();
     }, []);
 
-    console.log(sessionId);
-
     const handlePaymentSuccess = () => {
+        setLoading(true); // Set loading state to true when button is clicked
         executePaymentSuccess(sessionId, userId)
             .then((response) => {
                 if (response.status === 200) {
@@ -46,32 +47,38 @@ const Success = () => {
             })
             .catch((error) => {
                 console.log(error);
+            })
+            .finally(() => {
+                setLoading(false); // Reset loading state
             });
     };
 
     return (
         <div className="d-flex justify-content-center align-items-center min-vh-100" style={{ backgroundColor: "#000" }}>
             <div className="text-center" style={{ color: "#fff", maxWidth: "400px" }}>
-                {/* Success Icon with Animation */}
                 <FaCheckCircle size={80} color="#e50914" className="animate__animated animate__bounceIn" />
 
-                {/* Main Heading */}
                 <h3 className="fw-bold fs-2 mt-4 animate__animated animate__fadeIn" style={{ color: "#e50914" }}>
                     Payment Successful!
                 </h3>
 
-                {/* Subtitle */}
                 <p className="mt-3 mb-5 animate__animated animate__fadeIn" style={{ color: "#bbb" }}>
                     Thank you for your purchase. You can now enjoy all the premium features.
                 </p>
 
-                {/* Call-to-action Button */}
                 <button
                     onClick={() => handlePaymentSuccess()}
                     className="btn btn-lg mt-4 px-5 py-3 animate__animated animate__pulse"
                     style={{ backgroundColor: '#e50914', color: '#fff', borderRadius: "30px" }}
+                    disabled={loading} // Disable button while loading
                 >
-                    Proceed
+                    {loading ? (
+                        <Spinner animation="border" role="status" size="sm" style={{ color: '#fff' }}>
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    ) : (
+                        "Proceed"
+                    )}
                 </button>
             </div>
         </div>

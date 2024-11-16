@@ -1,21 +1,12 @@
-import {memo, Fragment, useState, useEffect} from "react";
-
-//component
+import { memo, Fragment, useState, useEffect } from "react";
 import SectionSlider from "../slider/SectionSlider";
-import CardStyle from "../../components/cards/CardStyle";
-
-//static data
 import { sectionSliders } from "../../StaticData/data";
-
-
-// the hook
 import { useTranslation } from "react-i18next"
-import {executeGetSusilaOriginals} from "../../api/endPoints.jsx";
+import { executeGetSusilaOriginals } from "../../api/endPoints.jsx";
 import CardStyleForSeries from "../cards/CardStyleForSeries.jsx";
 
 
-
-const SusilaOriginals = memo(({contentData}) => {
+const SusilaOriginals = memo(({ contentData }) => {
   const { t } = useTranslation();
   const [onlyonstreamit] = useState(sectionSliders);
 
@@ -37,7 +28,7 @@ const SusilaOriginals = memo(({contentData}) => {
             selectedVideo_Data={data}
             selectedVideo_Array={contentData}
             watchlistLink="/playlist"
-            // link="/movies-detail"
+          // link="/movies-detail"
           />
         )}
       </SectionSlider>
