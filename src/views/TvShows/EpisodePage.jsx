@@ -11,7 +11,8 @@ import { useTranslation } from "react-i18next";
 import { useViewData } from "../../ViewDataContext.jsx";
 import 'plyr/dist/plyr.css';
 import './EpisodePage.css'
-import HLS from '../../components/plugins/HLS.js'
+import HLS from '../../components/plugins/HLS.jsx'
+
 
 const TvShowsDetail = memo(() => {
   const { t } = useTranslation(), playerRef = useRef(null);

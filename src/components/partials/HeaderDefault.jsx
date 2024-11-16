@@ -67,7 +67,14 @@ const HeaderDefault = memo(() => {
       console.error('Error signing out:', error);
     }
   };
+  const [searchQuery, setSearchQuery] = useState('');
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    // Redirect to a search page with the query or handle it inline
+    navigate(`/search?query=${searchQuery}`);
+    setShow2(false); // Hide search dropdown after submitting
+  };
 
 
   return (
@@ -102,70 +109,83 @@ const HeaderDefault = memo(() => {
                 style={{ visibility: show1 ? "visible" : "hidden" }}
                 id="navbar_main"
               >
-                <Container fluid className="container-fluid p-lg-0">
+                <Container fluid className="container-fluid p-lg-0 mt-2">
                   <Offcanvas.Header className="px-0" closeButton onHide={() => setShow1(false)}>
                     <div className="navbar-brand ms-3">
                       <Logo />
                     </div>
                   </Offcanvas.Header>
                   <ul className="navbar-nav iq-nav-menu list-unstyled" id="header-menu">
-                    {/* Home Menu */}
+
+                    <Nav.Item as="li">
+                      <Nav.Link
+                        href="/explore"
+                        className={location.pathname === "/explore" ? "active" : ""}
+                      >
+                        {t("header.explore")}
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item as="li">
+                      <Nav.Link
+                        href="/tv-shows"
+                        className={location.pathname === "/tv-shows" ? "active" : ""}
+                      >
+                        {t("header.tv_show")}
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item as="li">
+                      <Nav.Link
+                        href="/movies"
+                        className={location.pathname === "/movies" ? "active" : ""}
+                      >
+                        {t("header.movie")}
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item as="li">
+                      <Nav.Link
+                        href="/live"
+                        className={location.pathname === "/live" ? "active" : ""}
+                      >
+                        {t("Live")}
+                      </Nav.Link>
+                    </Nav.Item>
+
                     <Nav.Item as="li">
                       <Nav.Link
                         aria-expanded={open2}
-                        href="#homePages"
                         onClick={() => setOpen2(!open2)}
-                        className={location.pathname === "/home" || location.pathname === "/explore" || location.pathname === "/tv-shows" || location.pathname === "/movies" || location.pathname === "/miscellaneous" ? "active" : ""}
+                        className={
+                          ["/about-us", "/contact-us", "/faq", "/PrivacyPolicy", "/pricing"].includes(location.pathname)
+                            ? "active"
+                            : ""
+                        }
                       >
-                        <span className="item-name">{t("header.home")}</span>
-                        <span className="menu-icon ms-2">
-                          <i className="fa fa-caret-down toggledrop-desktop right-icon" aria-hidden="true"></i>
-                          <span className="toggle-menu">
-                            <i className="fa fa-plus  arrow-active text-white" aria-hidden="true"></i>
-                            <i className="fa fa-minus  arrow-hover text-white" aria-hidden="true"></i>
-                          </span>
-                        </span>
-                      </Nav.Link>
-                      <Collapse in={open2} className="sub-nav list-unstyled">
-                        <ul>
-                          <Nav.Item as="li"><Link to="/home" className={location.pathname === "/home" ? "active" : ""}>{t("header.home")}</Link></Nav.Item>
-                          <Nav.Item as="li"><Link to="/explore" className={location.pathname === "/explore" ? "active" : ""}>{t("header.explore")}</Link></Nav.Item>
-                          <Nav.Item as="li"><Link to="/tv-shows" className={location.pathname === "/tv-shows" ? "active" : ""}>{t("header.tv_show")}</Link></Nav.Item>
-                          <Nav.Item as="li"><Link to="/movies" className={location.pathname === "/movies" ? "active" : ""}>{t("header.movie")}</Link></Nav.Item>
-                          <Nav.Item as="li"><Link to="/miscellaneous" className={location.pathname === "/miscellaneous" ? "active" : ""}>{t("header.miscellaneuos")}</Link></Nav.Item>
-                        </ul>
-                      </Collapse>
-                    </Nav.Item>
-                    <Nav.Item as="li">{/* Explore Menu */}
-                      <Nav.Link aria-expanded={open1} href="/explore"><span className="item-name">{t("header.explore")}</span></Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item as="li">{/* Movie Menu */}
-                      <Nav.Link aria-expanded={open1} href="/movies"><span className="item-name">{t("header.movie")}</span></Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item as="li">{/* TV Show Menu */}
-                      <Nav.Link aria-expanded={open1} href="/tv-shows"><span className="item-name">{t("header.tv_show")}</span></Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item as="li">{/* Live events Menu */}
-                      <Nav.Link aria-expanded={open1} href="/live"><span className="item-name">{t("Live")}</span></Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item as="li">      {/* Pages Menu */}
-                      <Nav.Link aria-expanded={open2} href="#homePages" onClick={() => setOpen2(!open2)} className={location.pathname === "/about-us" || location.pathname === "/contact-us" || location.pathname === "/faq" || location.pathname === "/PrivacyPolicy" || location.pathname === "/pricing" ? "active" : ""} >
                         <span className="item-name">{t("header.pages")}</span>
                         <span className="menu-icon ms-2">
                           <i className="fa fa-caret-down toggledrop-desktop right-icon" aria-hidden="true"></i>
                           <span className="toggle-menu">
-                            <i className="fa fa-plus  arrow-active text-white" aria-hidden="true"></i>
-                            <i className="fa fa-minus  arrow-hover text-white" aria-hidden="true"></i>
+                            <i className="fa fa-plus arrow-active text-white" aria-hidden="true"></i>
+                            <i className="fa fa-minus arrow-hover text-white" aria-hidden="true"></i>
                           </span>
                         </span>
                       </Nav.Link>
                       <Collapse in={open2} className="sub-nav list-unstyled">
                         <ul>
-                          <Nav.Item as="li"><Link to="/about-us" className={location.pathname === "/about-us" ? "active" : ""}>{t("header.about_us")}</Link></Nav.Item>
-                          <Nav.Item as="li"><Link to="/contact-us" className={location.pathname === "/contact-us" ? "active" : ""}>{t("header.contact_us")}</Link></Nav.Item>
-                          <Nav.Item as="li"><Link to="/faq" className={location.pathname === "/faq" ? "active" : ""}>{t("header.faq")}</Link></Nav.Item>
-                          <Nav.Item as="li"><Link to="/PrivacyPolicy" className={location.pathname === "/PrivacyPolicy" ? "active" : ""}>{t("header.privacy_policy")}</Link></Nav.Item>
-                          <Nav.Item as="li"><Link to="/pricing" className={location.pathname === "/pricing" ? "active" : ""}>{t("header.pricing_plan")}</Link></Nav.Item>
+                          <Nav.Item as="li">
+                            <Link to="/about-us" className={location.pathname === "/about-us" ? "active" : ""}>{t("header.about_us")}</Link>
+                          </Nav.Item>
+                          <Nav.Item as="li">
+                            <Link to="/contact-us" className={location.pathname === "/contact-us" ? "active" : ""}>{t("header.contact_us")}</Link>
+                          </Nav.Item>
+                          <Nav.Item as="li">
+                            <Link to="/faq" className={location.pathname === "/faq" ? "active" : ""}>{t("header.faq")}</Link>
+                          </Nav.Item>
+                          <Nav.Item as="li">
+                            <Link to="/PrivacyPolicy" className={location.pathname === "/PrivacyPolicy" ? "active" : ""}>{t("header.privacy_policy")}</Link>
+                          </Nav.Item>
+                          <Nav.Item as="li">
+                            <Link to="/pricing" className={location.pathname === "/pricing" ? "active" : ""}>{t("header.pricing_plan")}</Link>
+                          </Nav.Item>
                         </ul>
                       </Collapse>
                     </Nav.Item>
@@ -184,7 +204,7 @@ const HeaderDefault = memo(() => {
                 </Button>
                 <div className={`navbar-collapse collapse ${show ? "show" : ""}`} id="navbarSupportedContent" >
                   <ul className="navbar-nav align-items-center ms-auto mb-2 mb-xl-0 gap-3">
-                    <Dropdown as="li" className="nav-item dropdown iq-responsive-menu">
+                    {/* <Dropdown as="li" className="nav-item dropdown iq-responsive-menu">
                       <div className="search-box">
                         <Link to="#" onClick={() => setShow2(!show2)} className={`nav-link p-0 ${show2 ? "show" : ""}`} id="search-drop" data-bs-toggle="dropdown" aria-expanded="false" >
                           <div className="btn-icon btn-sm rounded-pill btn-action">
@@ -194,23 +214,29 @@ const HeaderDefault = memo(() => {
                             </svg>
                           </div>
                         </Link>
-                        <ul
-                          className={`dropdown-menu p-0 dropdown-search m-0 iq-search-bar ${show2 ? "show" : ""}`}
-                          style={{ width: "10rem" }} data-bs-popper="static" >
+                        <ul className={`dropdown-menu p-0 dropdown-search m-0 iq-search-bar ${show2 ? "show" : ""}`} style={{ width: "10rem" }} data-bs-popper="static">
                           <li className="p-0">
-                            <div className="form-group input-group mb-0">
-                              <input type="text" className="form-control border-0" placeholder={t("blogs.search")} />
-                              <button onClick={() => setShow2(!show2)} type="submit" className="search-submit">
-                                <svg className="icon-15" viewBox="0 0 24 24" fill="none">
-                                  <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" />
-                                  <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" />
-                                </svg>
-                              </button>
-                            </div>
+                            <form onSubmit={handleSearchSubmit}>
+                              <div className="form-group input-group mb-0">
+                                <input
+                                  type="text"
+                                  className="form-control border-0"
+                                  placeholder={t("blogs.search")}
+                                  value={searchQuery}
+                                  onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                                <button type="submit" className="search-submit">
+                                  <svg className="icon-15" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="11.7669" cy="11.7666" r="8.98856" stroke="currentColor" />
+                                    <path d="M18.0186 18.4851L21.5426 22" stroke="currentColor" />
+                                  </svg>
+                                </button>
+                              </div>
+                            </form>
                           </li>
                         </ul>
                       </div>
-                    </Dropdown>
+                    </Dropdown> */}
                     <Dropdown as="li" className="nav-item">
                       <Dropdown.Toggle size="sm" id="dropdownMenuButton1" as={CustomToggle} href="#" variant="nav-link d-flex align-items-center px-0" >
                         <div className="btn-icon rounded-pill user-icons">

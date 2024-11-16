@@ -1,4 +1,4 @@
-import {memo, Fragment, useState, useEffect} from "react";
+import { memo, Fragment, useState, useEffect } from "react";
 // hero slider
 import OttHeroSlider from "../../components/slider/OttHeroSlider";
 
@@ -18,14 +18,14 @@ import GenreSlider from "../../components/sections/GenreSlider";
 //static data
 import { ottVerticleLatestMovies } from "../../StaticData/data";
 import SusilaOriginals from "../../components/sections/OnlyOnStreamit";
-import {executeGetMovies, executeGetSusilaOriginals} from "../../api/endPoints.jsx";
+import { executeGetMovies, executeGetSusilaOriginals } from "../../api/endPoints.jsx";
 import LatestContents from "../../components/sections/LatestContents.jsx";
 import VerticalSectionSlider from "../../components/slider/VerticalSectionSlider.jsx";
 
 const HomePage = memo(() => {
     const [susilaData, setSusilaData] = useState([]);
     const [moviesData, setMoviesData] = useState([]);
-    const [susilaOriginalsData,setSusilaOriginalsData]= useState([]);
+    const [susilaOriginalsData, setSusilaOriginalsData] = useState([]);
 
     const getSusilaOriginals = async () => {
         console.log('content Data Execute start');
@@ -38,7 +38,7 @@ const HomePage = memo(() => {
             console.error('Error:', error);
         }
     }
-    const getMovies = async( ) =>{
+    const getMovies = async () => {
         // console.log('function Execute start ');
         try {
             const response = await executeGetMovies();
@@ -54,22 +54,22 @@ const HomePage = memo(() => {
         getSusilaOriginals();
     }, []);
 
-  return (
-    <Fragment>
-      <OttHeroSlider />
-      {/*<ContinueWatching slidesPerView={5} />*/}
-      {/*<TopTenMoviesToWatch />*/}
-      <SusilaOriginals contentData = {susilaOriginalsData}/>
-      <LatestContents/>
-      <VerticalSectionSlider sliderData={moviesData} />
-      {/*<YourFavouritePersonality paddingY="my-4" />*/}
-      <PopularMovies paddingY="my-4" />
-      <TabSlider />
-      {/*<GenreSlider />*/}
-      {/*<RecommendedForYou paddingY="my-4" />*/}
-      {/*<TopPicsForYou paddingY="my-4" />*/}
-    </Fragment>
-  );
+    return (
+        <Fragment>
+            <OttHeroSlider />
+            {/*<ContinueWatching slidesPerView={5} />*/}
+            {/*<TopTenMoviesToWatch />*/}
+            <SusilaOriginals contentData={susilaOriginalsData} />
+            <LatestContents />
+            <VerticalSectionSlider sliderData={moviesData} />
+            {/*<YourFavouritePersonality paddingY="my-4" />*/}
+            <PopularMovies paddingY="my-4" />
+            <TabSlider />
+            {/*<GenreSlider />*/}
+            {/*<RecommendedForYou paddingY="my-4" />*/}
+            {/*<TopPicsForYou paddingY="my-4" />*/}
+        </Fragment>
+    );
 });
 
 HomePage.displayName = "HomePage";
